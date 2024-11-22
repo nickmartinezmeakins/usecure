@@ -3,7 +3,7 @@ import { QuestionData } from '../../../types/questions';
 
 export const Quiz: React.FC<QuestionData> = ({ title, slides }) => {
   return (
-    <div>
+    <div className="max-w-3xl w-full">
       <h1>{title}</h1>
       {slides.map((slide, index) => (
         <div key={index}>

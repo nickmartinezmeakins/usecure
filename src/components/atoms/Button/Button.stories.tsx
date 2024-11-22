@@ -8,7 +8,7 @@ const meta: Meta<typeof Button> = {
   tags: ['autodocs'],
   args: {
     children: 'Example',
-    variant: 'default'
+    // variant: 'default'
   }
 };
 

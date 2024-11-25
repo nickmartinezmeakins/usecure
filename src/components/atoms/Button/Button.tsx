@@ -1,14 +1,33 @@
-import React from "react";
-
-interface ButtonProps {
-  children: React.ReactNode; // Ensure `children` can be any valid React node
-  onClick?: () => void; // Optional if you're handling button actions
-  className?: string; // Optional if you're passing custom styles
+import { twMerge } from "tailwind-merge";
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  variant: "primary" | "secondary";
+  disabled?: boolean;
+  type?: "button" | "submit" | "reset";
+  className?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({ children, onClick, className }) => {
+export const Button = ({
+  children,
+  variant = "primary",
+  disabled = false,
+  type = "button",
+  className,
+  ...props
+}: ButtonProps) => {
   return (
-    <button onClick={onClick} className={className}>
+    <button
+      type={type}
+      className={twMerge(
+        `rounded-md flex items-center border border-brand-standard px-5 py-3 focus:outline focus:outline-2 outline-brand-standard outline-offset-2`,
+        variant === "primary" && `bg-brand-standard text-white`,
+        variant === "secondary" && `bg-brand-light text-text-neuteral`,
+        disabled && `bg-[#6A96ED4D] border-0 text-[#0C0D0D4D]`,
+        className
+      )}
+      disabled={disabled}
+      {...props}
+    >
       {children}
     </button>
   );

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Checkbox } from './Checkbox';
+import { RadioButton } from './RadioButton';
 
-const meta: Meta<typeof Checkbox> = {
-  title: 'Atoms/Checkbox',
-  component: Checkbox,
+const meta: Meta<typeof RadioButton> = {
+  title: 'Atoms/RadioButton',
+  component: RadioButton,
   tags: ['autodocs'],
   args: {
     children: 'Example',
@@ -14,6 +14,6 @@ const meta: Meta<typeof Checkbox> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Checkbox>;
+type Story = StoryObj<typeof RadioButton>;
 
 export const Default: Story = {};

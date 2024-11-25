@@ -20,7 +20,8 @@
     "plop": "^4.0.1",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
-    "storybook": "^8.4.5"
+    "storybook": "^8.4.5",
+    "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.4.5",

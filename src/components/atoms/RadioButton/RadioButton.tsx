@@ -41,8 +41,7 @@ export const RadioButton: React.FC<RadioButtonProps> = ({
   const borderColor = status ? containerStyles[status] : containerStyles.default;
   const textColor = status ? textStyles[status] : textStyles.default;
 
-  // Animation variants for the message
-  const messageVariants = {
+  h-lvh  const messageVariants = {
     initial: { opacity: 0,  },
     animate: { opacity: 1,  },
     exit: { opacity: 0, },
@@ -86,7 +85,7 @@ export const RadioButton: React.FC<RadioButtonProps> = ({
       <AnimatePresence>
         {showMessage && message && (
           <motion.div
-            key={id} // Unique key for the message
+            key={id}
             className={`text-sm mt-1 ${textColor}`}
             variants={messageVariants}
             initial="initial"

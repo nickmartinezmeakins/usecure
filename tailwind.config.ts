@@ -52,6 +52,7 @@ export default {
         'correct': "url('/correct.svg')",
         'incorrect': "url('/incorrect.svg')",
         'info': "url('/info.svg')",
+        'grid': "url('/background.svg')",
       }
     },
   },

@@ -8,8 +8,6 @@
     "start": "next start",
     "lint": "next lint",
     "generate": "pnpm plop --plopfile ./.plop/plopfile.js",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@chromatic-com/storybook": "^3.2.2",

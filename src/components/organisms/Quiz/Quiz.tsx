@@ -12,6 +12,7 @@ export const Quiz: React.FC<QuestionData> = ({ slides }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string | null>>({});
   const [validationState, setValidationState] = useState<Record<number, boolean>>({});
+  const [isQuizComplete, setIsQuizComplete] = useState(false);
 
   const currentSlide = slides[currentSlideIndex];
   const selectedAnswer = selectedAnswers[currentSlideIndex] || null;
@@ -33,6 +34,8 @@ export const Quiz: React.FC<QuestionData> = ({ slides }) => {
     } else {
       if (currentSlideIndex < slides.length - 1) {
         setCurrentSlideIndex((prev) => prev + 1);
+      } else {
+        setIsQuizComplete(true);
       }
     }
   };
@@ -43,29 +46,57 @@ export const Quiz: React.FC<QuestionData> = ({ slides }) => {
     }
   };
 
-  const slideVariants = {
-    initial: { opacity: 0, x: 50 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -50 },
+  const calculateResults = () => {
+    const correctAnswers = slides.reduce((count, slide, index) => {
+      const selected = selectedAnswers[index];
+      const correct = slide.answers.find((answer) => answer.correct)?.id;
+      return selected === correct ? count + 1 : count;
+    }, 0);
+
+    const percentage = Math.round((correctAnswers / slides.length) * 100);
+
+    return { correctAnswers, percentage };
   };
+
+  const { correctAnswers, percentage } = calculateResults();
 
   return (
     <section className="min-h-screen flex flex-col justify-between">
       <Header />
-      <div className="flex justify-center align-middle">
-        <div className="max-w-3xl w-full px-4">
-          
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentSlideIndex}
-                variants={slideVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                transition={{ duration: 0.3 }}
-              >
-                <Tag>{currentSlideIndex + 1}/{slides.length}</Tag>
-                <fieldset className="mt-4">
+    
+      {isQuizComplete ? (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-center bg-grid bg-conver bg-no-repeat bg-center h-screen flex flex-col justify-center align-middle"
+        >
+          <h1 className="text-6xl font-bold">{percentage > 90 ? "Great work, you passed!" : "You failed"}</h1>
+          <div className="mt-6 flex justify-center align-middle gap-5">
+            <div>
+              <p className="h3">{percentage}%</p>
+              <p className="text-sm text-gray-600">90% required</p>
+            </div>
+            <div>
+              <p className="h3">{correctAnswers}/{slides.length}</p>
+              <p className="text-sm text-gray-600">Answered correctly</p>
+            </div>
+          </div>
+        </motion.div>
+      ) : (
+        <>
+        <div className="flex justify-center align-middle">
+          <div className="max-w-3xl w-full px-4">
+            <Tag>{currentSlideIndex + 1}/{slides.length}</Tag>
+            <fieldset className="mt-4">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlideIndex}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.3 }}
+                >
                   <legend className="h4">{currentSlide.question}</legend>
                   <div className="mt-8 max-w-[560px]">
                     {currentSlide.answers.map((answer) => (
@@ -103,19 +134,21 @@ export const Quiz: React.FC<QuestionData> = ({ slides }) => {
                       />
                     ))}
                   </div>
-                </fieldset>
-              </motion.div>
-            </AnimatePresence>
-          
+                </motion.div>
+              </AnimatePresence>
+            </fieldset>
+          </div>
         </div>
-      </div>
-      <NavigationButtons
-        onPrevious={handlePrevious}
-        onNext={handleContinue}
-        isPreviousDisabled={currentSlideIndex === 0}
-        isNextDisabled={!selectedAnswer && !showValidation}
-        nextLabel={showValidation ? "Next" : "Continue"}
-      />
+          <NavigationButtons
+            onPrevious={handlePrevious}
+            onNext={handleContinue}
+            isPreviousDisabled={currentSlideIndex === 0}
+            isNextDisabled={!selectedAnswer && !showValidation}
+            nextLabel={showValidation ? "Next" : "Continue"}
+        />
+        </>
+      )}
+      
     </section>
   );
 };

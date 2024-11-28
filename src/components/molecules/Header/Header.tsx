@@ -9,6 +9,6 @@ export const Header = () => (
       width={104}
       height={20}
     />
-    <Link className="hidden sm:flex" href="#">Course Demo</Link>
+    <Link className="hidden sm:flex hover:underline" href="#">Course Demo</Link>
   </header>
 );

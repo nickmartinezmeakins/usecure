@@ -6,6 +6,7 @@ import { QuestionData } from "@/types/questions";
 import { Header } from "@/components/molecules/Header";
 import { Tag } from "@/components/atoms/Tag";
 import { RadioButton } from "@/components/atoms/RadioButton";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const Quiz: React.FC<QuestionData> = ({ slides }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -42,51 +43,70 @@ export const Quiz: React.FC<QuestionData> = ({ slides }) => {
     }
   };
 
+  const slideVariants = {
+    initial: { opacity: 0, x: 50 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -50 },
+  };
+
   return (
     <section className="min-h-screen flex flex-col justify-between">
       <Header />
       <div className="flex justify-center align-middle">
         <div className="max-w-3xl w-full px-4">
-          <Tag>{currentSlideIndex + 1}/{slides.length}</Tag>
-          <fieldset className="mt-4">
-            <legend className="h4">{currentSlide.question}</legend>
-            <div className="mt-8 max-w-[560px]">
-            {currentSlide.answers.map((answer) => (
-              <RadioButton
-                key={answer.id}
-                id={answer.id}
-                text={answer.text}
-                name={`question-${currentSlideIndex}`}
-                selected={selectedAnswer === answer.id}
-                onChange={handleAnswerChange}
-                disabled={showValidation}
-                status={
-                  showValidation
-                    ? answer.correct && selectedAnswer === answer.id
-                      ? "correct"
-                      : selectedAnswer === answer.id
-                      ? "incorrect"
-                      : answer.correct
-                      ? "info"
-                      : undefined
-                    : undefined
-                }
-                message={
-                  showValidation
-                    ? answer.correct && selectedAnswer === answer.id
-                      ? "Correct. This is the correct option to select."
-                      : selectedAnswer === answer.id
-                      ? "Incorrect. This is not the correct answer."
-                      : answer.correct
-                      ? "This was the correct answer: This is why."
-                      : undefined
-                    : undefined
-                }
-                showMessage={showValidation}
-              />
-            ))}
-            </div>
-          </fieldset>
+          
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlideIndex}
+                variants={slideVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.3 }}
+              >
+                <Tag>{currentSlideIndex + 1}/{slides.length}</Tag>
+                <fieldset className="mt-4">
+                  <legend className="h4">{currentSlide.question}</legend>
+                  <div className="mt-8 max-w-[560px]">
+                    {currentSlide.answers.map((answer) => (
+                      <RadioButton
+                        key={answer.id}
+                        id={answer.id}
+                        text={answer.text}
+                        name={`question-${currentSlideIndex}`}
+                        selected={selectedAnswer === answer.id}
+                        onChange={handleAnswerChange}
+                        disabled={showValidation}
+                        status={
+                          showValidation
+                            ? answer.correct && selectedAnswer === answer.id
+                              ? "correct"
+                              : selectedAnswer === answer.id
+                              ? "incorrect"
+                              : answer.correct
+                              ? "info"
+                              : undefined
+                            : undefined
+                        }
+                        message={
+                          showValidation
+                            ? answer.correct && selectedAnswer === answer.id
+                              ? "Correct. This is the correct option to select."
+                              : selectedAnswer === answer.id
+                              ? "Incorrect. This is not the correct answer."
+                              : answer.correct
+                              ? "This was the correct answer: This is why."
+                              : undefined
+                            : undefined
+                        }
+                        showMessage={showValidation}
+                      />
+                    ))}
+                  </div>
+                </fieldset>
+              </motion.div>
+            </AnimatePresence>
+          
         </div>
       </div>
       <NavigationButtons

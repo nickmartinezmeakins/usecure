@@ -1,4 +1,5 @@
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface RadioButtonProps {
   id: string;
@@ -40,11 +41,18 @@ export const RadioButton: React.FC<RadioButtonProps> = ({
   const borderColor = status ? containerStyles[status] : containerStyles.default;
   const textColor = status ? textStyles[status] : textStyles.default;
 
+  // Animation variants for the message
+  const messageVariants = {
+    initial: { opacity: 0,  },
+    animate: { opacity: 1,  },
+    exit: { opacity: 0, },
+  };
+
   return (
     <div className="mb-3">
       <label
         htmlFor={id}
-        className={`flex items-center rounded-md border p-3.5  focus-within:outline focus-within:outline-2 outline-brand-standard outline-offset-2 ${
+        className={`flex items-center rounded-md border p-3.5 focus-within:outline focus-within:outline-2 outline-brand-standard outline-offset-2 ${
           disabled ? "cursor-not-allowed" : "cursor-pointer hover:bg-gray-lightest"
         } ${borderColor}`}
       >
@@ -59,15 +67,15 @@ export const RadioButton: React.FC<RadioButtonProps> = ({
           className="absolute opacity-0 pointer-events-none"
         />
         <div
-          className={`w-3.5 h-3.5 min-w-3.5 flex items-center justify-center rounded-full bg-contain bg-no-repeat bg-center ${
+          className={`w-3.5 h-3.5 min-w-3.5 flex items-center justify-center rounded-full bg-contain bg-no-repeat bg-center transition-colors duration-75 ${
             selected && !showMessage
-              ? " bg-blue border-blue border-2"
+              ? "bg-blue border-blue border-2"
               : status === "correct"
-              ? " bg-correct"
+              ? "bg-correct"
               : status === "incorrect"
-              ? " bg-incorrect"
+              ? "bg-incorrect"
               : status === "info"
-              ? " bg-info"
+              ? "bg-info"
               : "bg-gray-light border-border-dark border-2"
           }`}
         >
@@ -75,9 +83,21 @@ export const RadioButton: React.FC<RadioButtonProps> = ({
         </div>
         <span className="text-sm ml-3.5 text-text-neuteral">{text}</span>
       </label>
-      {showMessage && message && (
-        <div className={`text-sm mt-1 ${textColor}`}>{message}</div>
-      )}
+      <AnimatePresence>
+        {showMessage && message && (
+          <motion.div
+            key={id} // Unique key for the message
+            className={`text-sm mt-1 ${textColor}`}
+            variants={messageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.2 }}
+          >
+            {message}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -9,5 +9,5 @@
 }
 
 .h4 {
-  @apply text-3xl font-bold;
+  @apply text-2xl leading-9 lg:text-3xl font-bold;
 }

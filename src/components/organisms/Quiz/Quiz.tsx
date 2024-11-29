@@ -69,9 +69,9 @@ export const Quiz: React.FC<QuestionData> = ({ slides }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="text-center bg-grid bg-conver bg-no-repeat bg-center h-screen flex flex-col justify-center align-middle"
+          className="text-center bg-grid bg-conver bg-no-repeat bg-center h-[calc(100vh-65px)] flex flex-col justify-center align-middle"
         >
-          <h1 className="text-6xl font-bold">{percentage > 90 ? "Great work, you passed!" : "You failed"}</h1>
+          <h1 className="text-[40px] leading-[48px] lg:text-6xl font-bold">{percentage > 90 ? "Great work, you passed!" : "You failed"}</h1>
           <div className="mt-6 flex justify-center align-middle gap-5">
             <div>
               <p className="h3">{percentage}%</p>

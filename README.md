@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This uses Next.js and Typescript. I wanted to create a couple of unit tests for the quiz but ran out of time and I also would've liked to have used Storybook. Uses Plop for generating the components and Tailwind for styling. I had the design system I could've spent a lot more time to get the Tailwind config matching the designs exactly. It's all using local state but I would've liked to use LocalStorage to save the user data although I expect that in the real world the score would be pushed up somewhere and then the initial quiz logic would run through that (has this been completed and passed etc). 
+
+I have made a few assumptions here that I would've raised during a desing handover but I think this works well. 
+
+I believe this is fully accessable and have structured this as I would on a project (using Atomic design principles, sorry James!)
 
 ## Getting Started
 

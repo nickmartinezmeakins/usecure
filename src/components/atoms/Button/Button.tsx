@@ -19,7 +19,7 @@ export const Button = ({
     <button
       type={type}
       className={twMerge(
-        `rounded-md flex items-center border border-brand-standard px-5 py-3 focus:outline focus:outline-2 outline-brand-standard outline-offset-2`,
+        `rounded-md flex justify-center items-center border border-brand-standard px-5 py-3 focus:outline focus:outline-2 outline-brand-standard outline-offset-2`,
         variant === "primary" && `bg-brand-standard text-white`,
         variant === "secondary" && `bg-brand-light text-text-neuteral`,
         disabled && `bg-[#6A96ED4D] border-0 text-[#0C0D0D4D]`,

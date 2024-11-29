@@ -20,15 +20,14 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   </svg>
   return (
     <div className="py-3 sm:py-4 px-4 sm:px-8 border-t border-gray flex flex-row justify-between gap-2">
-      {!isPreviousDisabled && (
-        <Button
-          onClick={onPrevious}
-          variant="secondary"
-          className="w-full sm:w-auto flex flex-row align-middle gap-2"
-        >
-          <span>{Icon} </span>Go Back
-        </Button>
-      )}
+      <Button
+        onClick={onPrevious}
+        variant="secondary"
+        className="w-full sm:w-auto flex flex-row align-middle gap-2"
+        disabled={isPreviousDisabled}
+      >
+        <span>{Icon} </span>Go Back
+      </Button>
       <Button
         onClick={onNext}
         disabled={isNextDisabled}
